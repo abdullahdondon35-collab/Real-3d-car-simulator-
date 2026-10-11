@@ -1,0 +1,6 @@
+{
+  "name": "DriveZone 3D",
+  "description": "Realistic 3D car driving simulator with open world, customizable cars, dynamic weather, and true physics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

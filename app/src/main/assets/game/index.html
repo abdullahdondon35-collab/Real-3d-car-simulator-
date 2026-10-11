@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>DriveZone 3D - Realistic Car Simulator</title>
+  <link rel="stylesheet" href="css/game.css">
+</head>
+<body>
+  <!-- LOADING SCREEN -->
+  <div id="loading-screen">
+    <div class="loading-logo">DRIVEZONE 3D</div>
+    <div class="spinner"></div>
+    <div class="loading-text">Starting High-Performance 3D Simulation...</div>
+  </div>
+
+  <!-- 3D WEBGL CANVAS -->
+  <div id="canvas-container"></div>
+
+  <!-- NOTIFICATION TOAST -->
+  <div id="notification-banner">
+    <span class="coin-icon">★</span>
+    <span id="notif-text">Welcome to DriveZone 3D</span>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- LUXURY SHOWROOM & GARAGE SCREEN            -->
+  <!-- ========================================== -->
+  <div id="garage-screen" class="garage-interactive">
+    <!-- Top Header -->
+    <div class="garage-header">
+      <div class="showroom-brand">
+        <div class="brand-badge">APEX</div>
+        <div>
+          <div class="showroom-title">LUXURY SHOWROOM</div>
+          <!-- Category Tabs -->
+          <div class="category-tabs">
+            <button class="tab-btn active" data-cat="All">All</button>
+            <button class="tab-btn" data-cat="Supercar">Supercars</button>
+            <button class="tab-btn" data-cat="Hypercar">Hypercars</button>
+            <button class="tab-btn" data-cat="Luxury">Luxury</button>
+            <button class="tab-btn" data-cat="Track">Track / GT</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Money Badge -->
+      <div class="money-badge">
+        <span class="coin-icon">$</span>
+        <span class="money-text" id="player-coins-val">3,500</span>
+      </div>
+    </div>
+
+    <!-- Vehicle Details Panel (Left) -->
+    <div class="car-details-panel">
+      <div class="car-name-title" id="car-title">Pulse Sport 2.0T</div>
+      <div class="car-category-tag" id="car-brand">Urban Sport • Standard</div>
+
+      <div class="stat-row">
+        <div class="stat-label-wrap">
+          <span>TOP SPEED</span>
+          <span id="stat-speed-val">235 km/h</span>
+        </div>
+        <div class="stat-bar-track">
+          <div class="stat-bar-fill speed" id="stat-speed-bar" style="width: 50%;"></div>
+        </div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat-label-wrap">
+          <span>0-100 KM/H ACCEL</span>
+          <span id="stat-accel-val">6.2s</span>
+        </div>
+        <div class="stat-bar-track">
+          <div class="stat-bar-fill accel" id="stat-accel-bar" style="width: 60%;"></div>
+        </div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat-label-wrap">
+          <span>HANDLING & GRIP</span>
+          <span id="stat-handling-val">72/100</span>
+        </div>
+        <div class="stat-bar-track">
+          <div class="stat-bar-fill handling" id="stat-handling-bar" style="width: 72%;"></div>
+        </div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat-label-wrap">
+          <span>POWER & DRIVETRAIN</span>
+          <span id="stat-power-val">240 HP (FWD)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Carousel Navigation & Action Buttons -->
+    <div class="garage-bottom">
+      <div class="car-carousel-nav">
+        <button class="nav-arrow-btn" id="prev-car-btn">❮</button>
+        <div class="car-indicator-pills" id="car-indicator-pills"></div>
+        <button class="nav-arrow-btn" id="next-car-btn">❯</button>
+      </div>
+
+      <div class="garage-actions-group">
+        <button class="secondary-garage-btn" id="showroom-cust-btn">🎨 CUSTOMIZE</button>
+        <button class="primary-garage-btn" id="showroom-drive-btn">🏁 DRIVE NOW</button>
+        <button class="primary-garage-btn buy-btn" id="showroom-buy-btn" style="display: none;">
+          💰 UNLOCK CAR (<span id="buy-price-val">18,500</span> CR)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- CUSTOMIZER MODAL                           -->
+  <!-- ========================================== -->
+  <div id="customizer-panel" class="interactive">
+    <div class="cust-header">
+      <div class="cust-title">VEHICLE TUNING</div>
+      <button class="cust-close-btn" id="cust-close-btn">✕</button>
+    </div>
+
+    <div class="cust-nav">
+      <button class="cust-tab-btn active" data-cust-view="paint">Paint</button>
+      <button class="cust-tab-btn" data-cust-view="neon">Neon Underglow</button>
+      <button class="cust-tab-btn" data-cust-view="spoiler">Aero Spoiler</button>
+      <button class="cust-tab-btn" data-cust-view="perf">Performance</button>
+    </div>
+
+    <div class="cust-body">
+      <!-- Paint Section -->
+      <div class="cust-section" id="cust-sec-paint">
+        <div class="cust-section-title">Color Palette</div>
+        <div class="color-swatches-grid">
+          <div class="color-swatch active" style="background:#0284c7;" data-color="#0284c7"></div>
+          <div class="color-swatch" style="background:#f97316;" data-color="#f97316"></div>
+          <div class="color-swatch" style="background:#dc2626;" data-color="#dc2626"></div>
+          <div class="color-swatch" style="background:#1e3a8a;" data-color="#1e3a8a"></div>
+          <div class="color-swatch" style="background:#eab308;" data-color="#eab308"></div>
+          <div class="color-swatch" style="background:#0f172a;" data-color="#0f172a"></div>
+          <div class="color-swatch" style="background:#10b981;" data-color="#10b981"></div>
+          <div class="color-swatch" style="background:#8b5cf6;" data-color="#8b5cf6"></div>
+          <div class="color-swatch" style="background:#f43f5e;" data-color="#f43f5e"></div>
+          <div class="color-swatch" style="background:#ffffff;" data-color="#ffffff"></div>
+          <div class="color-swatch" style="background:#64748b;" data-color="#64748b"></div>
+          <div class="color-swatch" style="background:#000000;" data-color="#111827"></div>
+        </div>
+
+        <div class="cust-section-title" style="margin-top: 14px;">Paint Finish</div>
+        <div class="option-cards-row">
+          <div class="option-card finish-opt active" data-finish="metallic">Metallic</div>
+          <div class="option-card finish-opt" data-finish="gloss">High Gloss</div>
+          <div class="option-card finish-opt" data-finish="matte">Stealth Matte</div>
+          <div class="option-card finish-opt" data-finish="chameleon">Chameleon</div>
+        </div>
+      </div>
+
+      <!-- Neon Section -->
+      <div class="cust-section" id="cust-sec-neon" style="display: none;">
+        <div class="cust-section-title">Underglow Neon</div>
+        <div class="option-cards-row">
+          <div class="option-card underglow-opt active" data-glow="off">Off</div>
+          <div class="option-card underglow-opt" data-glow="#38bdf8">Electric Cyan</div>
+          <div class="option-card underglow-opt" data-glow="#a855f7">Neon Purple</div>
+          <div class="option-card underglow-opt" data-glow="#ef4444">Crimson Red</div>
+          <div class="option-card underglow-opt" data-glow="#10b981">Toxic Lime</div>
+          <div class="option-card underglow-opt" data-glow="#f59e0b">Amber Gold</div>
+        </div>
+      </div>
+
+      <!-- Spoiler Section -->
+      <div class="cust-section" id="cust-sec-spoiler" style="display: none;">
+        <div class="cust-section-title">Aerodynamic Wing</div>
+        <div class="option-cards-row">
+          <div class="option-card spoiler-opt active" data-spoiler="sport">Ducktail Lip</div>
+          <div class="option-card spoiler-opt" data-spoiler="gt">GT Carbon Wing</div>
+          <div class="option-card spoiler-opt" data-spoiler="hyper">Hyper Aerofoil</div>
+          <div class="option-card spoiler-opt" data-spoiler="none">No Spoiler</div>
+        </div>
+      </div>
+
+      <!-- Performance Upgrades Section -->
+      <div class="cust-section" id="cust-sec-perf" style="display: none;">
+        <div class="cust-section-title">Performance Upgrades</div>
+        <div id="upgrades-list" style="display: flex; flex-direction: column; gap: 8px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- ACTIVE DRIVING HUD                         -->
+  <!-- ========================================== -->
+  <div id="driving-hud" style="display: none;">
+    <!-- Top Bar -->
+    <div class="top-hud">
+      <!-- Minimap Radar -->
+      <div id="minimap-container">
+        <canvas id="minimap-canvas"></canvas>
+      </div>
+
+      <!-- Top Center Controls -->
+      <div style="display: flex; gap: 10px;">
+        <button class="hud-pill-btn interactive" id="btn-weather-switch">⛅ SKY / TIME</button>
+        <button class="hud-pill-btn interactive" id="btn-cam-switch">🎥 CAMERA</button>
+        <button class="hud-pill-btn interactive" id="btn-pause">⏸ PAUSE</button>
+      </div>
+
+      <!-- Coin Display -->
+      <div class="money-badge">
+        <span class="coin-icon">$</span>
+        <span class="money-text" id="driving-coins-val">3,500</span>
+      </div>
+    </div>
+
+    <!-- Cluster Speedometer (Bottom-Right Center) -->
+    <div class="cluster-container">
+      <div class="gauge-card">
+        <div class="speed-display">
+          <div class="speed-value" id="hud-speed-val">0</div>
+          <div class="speed-unit">KM/H</div>
+        </div>
+
+        <div class="rpm-bar-container">
+          <div class="rpm-bar-fill" id="hud-rpm-fill"></div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div class="gear-badge" id="hud-gear-val">D1</div>
+          <div class="car-health-bar">
+            <span>HEALTH</span>
+            <div class="health-track">
+              <div class="health-fill" id="hud-health-fill"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Controls Left (Steering Wheel / Arrows) -->
+    <div class="controls-left interactive">
+      <div id="steering-wheel-wrapper">
+        <div id="steering-wheel">
+          <div class="wheel-spoke wheel-spoke-h"></div>
+          <div class="wheel-spoke wheel-spoke-v"></div>
+          <div class="wheel-center">APEX</div>
+        </div>
+      </div>
+
+      <div class="steer-arrows">
+        <div class="touch-btn" id="btn-steer-left">◀</div>
+        <div class="touch-btn" id="btn-steer-right">▶</div>
+      </div>
+    </div>
+
+    <!-- Controls Right (Gas & Brake Pedals + E-Brake) -->
+    <div class="controls-right interactive">
+      <div class="pedal brake" id="pedal-brake">
+        <div class="pedal-ribs"></div>
+        <div class="pedal-ribs"></div>
+        <div class="pedal-label">BRAKE</div>
+      </div>
+
+      <div class="pedal gas" id="pedal-gas">
+        <div class="pedal-ribs"></div>
+        <div class="pedal-ribs"></div>
+        <div class="pedal-ribs"></div>
+        <div class="pedal-label">DRIVE</div>
+      </div>
+    </div>
+
+    <!-- Action Buttons (Right Vertical Stack) -->
+    <div class="action-buttons-col interactive">
+      <div class="mini-action-btn nos-btn" id="btn-nos">NOS</div>
+      <div class="mini-action-btn" id="btn-handbrake">🅿</div>
+      <div class="mini-action-btn active" id="btn-headlights">💡</div>
+      <div class="mini-action-btn" id="btn-horn">📢</div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- PAUSE MODAL                                -->
+  <!-- ========================================== -->
+  <div id="pause-modal" class="modal-overlay">
+    <div class="modal-dialog">
+      <div class="modal-title">GAME PAUSED</div>
+      <div class="modal-desc">Realistic 3D Driving Simulator</div>
+
+      <div class="menu-options-list">
+        <button class="menu-opt-btn" id="btn-resume">▶ RESUME DRIVING</button>
+        <button class="menu-opt-btn" id="btn-pause-reset">🔄 RESET POSITION</button>
+        <button class="menu-opt-btn" id="btn-pause-garage">🏛 RETURN TO GARAGE</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Game Scripts -->
+  <script src="three.min.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/vehicles.js"></script>
+  <script src="js/physics.js"></script>
+  <script src="js/world.js"></script>
+  <script src="js/garage.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
